@@ -21,6 +21,8 @@ setup(
     author_email='office@lovelysystems.com',
     url='https://github.com/lovelysystems/lovely-ws-status',
     keywords='pyramid svc status monitoring',
+    namespace_packages=['lovely'],
+    include_package_data=True,
     packages=find_packages('src'),
     package_dir={'': 'src'},
     zip_safe=False,
