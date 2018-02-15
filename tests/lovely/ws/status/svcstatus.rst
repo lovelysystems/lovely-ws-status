@@ -150,3 +150,12 @@ The last metric must end with a new line::
 
     >>> response.body.endswith(b'\n')
     True
+
+
+Test Clean Up
+=============
+
+Remove the registered status handler::
+
+    >>> from lovely.ws import status
+    >>> status.STATUS_HANDLERS.clear()
