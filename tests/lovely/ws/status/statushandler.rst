@@ -41,6 +41,44 @@ Now the status can be requested::
     {'state': 'YELLOW', 'detail': 'I am yellow'}
 
 
+For classes there is the `StateHandlerMixin` class which can be used to
+provide the status of the instance. This is usually be used for threads to
+provide their running state as service status::
+
+    >>> from lovely.ws.status.statehandler import StateHandlerMixin
+    >>> class Checker(StateHandlerMixin):
+    ...     def __init__(self):
+    ...         self.setState(YELLOW)
+
+    >>> checker = Checker()
+    >>> addStatusHandler('test2', checker)
+    >>> getStatus('test2')
+    {'state': 'YELLOW'}
+
+setState allows to set any additional property::
+
+    >>> checker.setState(GREEN, detail='running')
+    >>> getStatus('test2')
+    {'state': 'OK', 'detail': 'running'}
+
+It is possible to send state changes to a logger. The logger must be assigned
+to the logger property of the instance::
+
+    >>> import logging
+    >>> from io import StringIO
+    >>> stream = StringIO()
+    >>> handler = logging.StreamHandler(stream)
+    >>> testlogger = logging.getLogger('test')
+    >>> testlogger.setLevel(logging.INFO)
+    >>> testlogger.addHandler(handler)
+    >>> checker.logger = testlogger
+
+    >>> checker.setState(RED, detail='stopped')
+    >>> handler.flush()
+    >>> stream.getvalue()
+    'state change: OK -> RED "stopped"\n'
+
+
 Check for Status
 ================
 
