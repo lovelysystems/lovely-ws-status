@@ -5,6 +5,9 @@ Changes for Lovely Webservice Status
 unreleased
 ==========
 
+2018/03/02 0.0.3
+================
+
  - added StateHandlerMixin
 
 2018/02/15 0.0.2
