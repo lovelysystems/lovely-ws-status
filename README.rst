@@ -17,6 +17,10 @@ handler must return a dict with a state property which can have the value
 ``OK``, ``YELLOW`` or ``RED``. Additional properties like ``detail`` can be
 optionally added, but will only be displayed in the JSON SVC status view.
 
+
+As Callable
+-----------
+
 Create a status handler as a python function::
 
     >>> from lovely.ws.status import OK
@@ -43,6 +47,25 @@ Status handlers can also be classes, just provide a ``__call__`` method::
     ...         }
     >>> statusHandler2 = StatusHandler()
     >>> addStatusHandler('UserService', statusHandler2)
+
+
+Mixin Class
+-----------
+
+To simplify the implementation of status providers there is a mixin class
+which handles the state and provides logging on status changes::
+
+    >>> from lovely.ws.status.statehandler import StateHandlerMixin
+    >>> class MyHandler(StateHandlerMixin):
+    ...     def __init__(self):
+    ...         self.setState(YELLOW)
+    >>> myHandler = MyHandler()
+    >>> addStatusHandler('myHandler', myHandler)
+
+Now just use ``setState`` to change the state. ``setState`` allows to set any
+additional property on the state::
+
+    >>> myHandler.setState(GREEN, detail='running')
 
 
 SVC Status View
