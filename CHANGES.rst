@@ -5,6 +5,9 @@ Changes for Lovely Webservice Status
 unreleased
 ==========
 
+2018/04/16 0.0.4
+================
+
  - allow to provide additional labels for prometheus svc_status result
 
 2018/03/02 0.0.3
