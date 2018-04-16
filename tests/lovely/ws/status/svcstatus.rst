@@ -145,8 +145,8 @@ The status can be requested in prometheus exposition format::
     # HELP svc_status Status 0->OK, 1->YELLOW, 2->RED
     # TYPE svc_status untyped
     svc_status{name="status3"} 2
-    svc_status{name="errors"} 7
-    svc_status{name="good"} 42
+    svc_status{name="status3_errors"} 7
+    svc_status{name="status3_good"} 42
     <BLANKLINE>
 
 The last metric must end with a new line::
