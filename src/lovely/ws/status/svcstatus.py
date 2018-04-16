@@ -34,6 +34,14 @@ def svc_status_view(request):
                 name=name,
                 value=NUMERIC_VALUES.get(status.get('state'), 0)
             ))
+            # additional optional labels
+            labels = status.get('labels')
+            if isinstance(labels, dict):
+                for label, value in labels.items():
+                    lines.append('svc_status{{name="{name}"}} {value}'.format(
+                        name=label,
+                        value=value
+                    ))
         lines.append('')  # new line required after every metric
         response.text = u'\n'.join(lines)
     elif as_json:

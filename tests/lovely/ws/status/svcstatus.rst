@@ -122,9 +122,9 @@ in the prometheus exposition format (text).
 Mock states for status 2 and 3::
 
     >>> def status_handler_yellow():
-    ...     return {'state': YELLOW}
+    ...     return {'state': YELLOW, 'labels': 'not a dict'}
     >>> def status_handler_red():
-    ...     return {'state': RED}
+    ...     return {'state': RED, 'labels': {"errors": 7, "good": 42}}
     >>> addStatusHandler('status2', status_handler_yellow)
     >>> addStatusHandler('status3', status_handler_red)
 
@@ -145,6 +145,9 @@ The status can be requested in prometheus exposition format::
     # HELP svc_status Status 0->OK, 1->YELLOW, 2->RED
     # TYPE svc_status untyped
     svc_status{name="status3"} 2
+    svc_status{name="errors"} 7
+    svc_status{name="good"} 42
+    <BLANKLINE>
 
 The last metric must end with a new line::
 
