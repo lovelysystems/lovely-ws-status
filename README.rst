@@ -55,6 +55,7 @@ Mixin Class
 To simplify the implementation of status providers there is a mixin class
 which handles the state and provides logging on status changes::
 
+    >>> from lovely.ws.status import YELLOW, GREEN
     >>> from lovely.ws.status.statehandler import StateHandlerMixin
     >>> class MyHandler(StateHandlerMixin):
     ...     def __init__(self):

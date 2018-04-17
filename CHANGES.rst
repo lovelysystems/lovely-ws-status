@@ -5,6 +5,11 @@ Changes for Lovely Webservice Status
 unreleased
 ==========
 
+2018/04/17 0.0.5
+================
+
+ - remove not needed string formatting
+
 2018/04/16 0.0.4
 ================
 

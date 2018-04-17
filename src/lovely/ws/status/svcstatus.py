@@ -24,12 +24,8 @@ def svc_status_view(request):
         response.content_type = 'text/plain; version=0.0.4'
         lines = []
         for name, status in sorted(result.items()):
-            lines.append(
-                '# HELP svc_status Status 0->OK, 1->YELLOW, 2->RED'.format(
-                    name=name
-                )
-            )
-            lines.append('# TYPE svc_status untyped'.format(name=name))
+            lines.append('# HELP svc_status Status 0->OK, 1->YELLOW, 2->RED')
+            lines.append('# TYPE svc_status untyped')
             lines.append('svc_status{{name="{name}"}} {value}'.format(
                 name=name,
                 value=NUMERIC_VALUES.get(status.get('state'), 0)
