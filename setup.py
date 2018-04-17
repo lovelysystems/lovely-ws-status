@@ -10,7 +10,7 @@ requires = ['pyramid']
 
 setup(
     name='lovely-ws-status',
-    version='0.0.5',
+    version='0.0.6',
     description='Service Status Utilities for Pyramid Apps',
     long_description=readme,
     classifiers=[

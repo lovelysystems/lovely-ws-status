@@ -5,6 +5,9 @@ Changes for Lovely Webservice Status
 unreleased
 ==========
 
+2018/04/17 0.0.6
+================
+
  - provide metrics from prometheus_client if the packages is installed
 
 2018/04/17 0.0.5
