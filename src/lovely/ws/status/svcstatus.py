@@ -4,6 +4,7 @@ from pyramid.view import view_config
 try:
     from prometheus_client import generate_latest
 except:
+    # provide a dummy if the prometheus_client package is not available
     def generate_latest():
         return b''
 
