@@ -147,12 +147,47 @@ The status can be requested in prometheus exposition format::
     svc_status{name="status3"} 2
     svc_status{name="status3_errors"} 7
     svc_status{name="status3_good"} 42
-    <BLANKLINE>
+    ...
+
+Because the test environment has prometheus_client installed additional
+prometheus metrics are provided::
+
+    >>> print(response.body.decode('utf-8'))
+    # HELP ...
+    ...
+    # HELP process_virtual_memory_bytes Virtual memory size in bytes.
+    # TYPE process_virtual_memory_bytes gauge
+    process_virtual_memory_bytes ...
+    ...
 
 The last metric must end with a new line::
 
     >>> response.body.endswith(b'\n')
     True
+
+Prometheus metrics are also added if available::
+
+    >>> from prometheus_client import Counter
+    >>> c = Counter('test', 'A test counter')
+    >>> c.inc()
+    >>> response = svc_status_view(request)
+    >>> print(response.body.decode('utf-8'))
+    # HELP ...
+    ...
+    # HELP test A test counter
+    # TYPE test counter
+    test 1.0
+    <BLANKLINE>
+
+    >>> c.inc()
+    >>> response = svc_status_view(request)
+    >>> print(response.body.decode('utf-8'))
+    # HELP ...
+    ...
+    # HELP test A test counter
+    # TYPE test counter
+    test 2.0
+    <BLANKLINE>
 
 
 Test Clean Up

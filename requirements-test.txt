@@ -9,6 +9,7 @@ hupper==1.0
 pastedeploy==1.5.2
 plaster-pastedeploy==0.4.1
 plaster==1.0
+prometheus-client==0.2.0
 py==1.4.34                # via pytest
 pyramid==1.9.1
 pytest==3.2.3

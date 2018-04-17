@@ -1,5 +1,13 @@
 from pyramid.view import view_config
 
+# If the prometheus client is available we will provide the prometheus metrics
+try:
+    from prometheus_client import generate_latest
+except:
+    def generate_latest():
+        return b''
+
+
 from . import STATUS_HANDLERS, NUMERIC_VALUES
 
 
@@ -42,7 +50,9 @@ def svc_status_view(request):
                         )
                     )
         lines.append('')  # new line required after every metric
-        response.text = u'\n'.join(lines)
+        result = u'\n'.join(lines)
+        result += generate_latest().decode('utf-8')
+        response.text = result
     elif as_json:
         response.content_type = 'application/json'
         response.json = result
