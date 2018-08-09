@@ -6,7 +6,7 @@ repositories {
 }
 
 plugins {
-    base
+    `java-library`
 }
 
 tasks {
@@ -39,10 +39,9 @@ tasks {
             }
         }
     }
-
-
 }
 
-task(name = "wrapper", type = Wrapper::class) {
-    gradleVersion = "4.2.1"
+java.sourceSets {
+    "main" { java.srcDirs("src") }
+    "test" { java.srcDirs("tests") }
 }
