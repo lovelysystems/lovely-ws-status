@@ -1,0 +1,2 @@
+recursive-include src
+include VERSION.txt README.rst

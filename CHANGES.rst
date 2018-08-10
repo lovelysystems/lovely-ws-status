@@ -5,6 +5,9 @@ Changes for Lovely Webservice Status
 unreleased
 ==========
 
+ - open sourced this project under APLv2
+ - added build and publish tasks
+
 2018/04/17 0.0.6
 ================
 

@@ -5,12 +5,16 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 readme = open(os.path.join(here, 'README.rst')).read()
 
-requires = ['pyramid']
+
+def get_version():
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "VERSION.txt")
+    with open(p) as f:
+        return f.read().strip()
 
 
 setup(
     name='lovely-ws-status',
-    version='0.0.6',
+    version=get_version(),
     description='Service Status Utilities for Pyramid Apps',
     long_description=readme,
     classifiers=[
@@ -20,11 +24,12 @@ setup(
     author='Lovely Systems',
     author_email='office@lovelysystems.com',
     url='https://github.com/lovelysystems/lovely-ws-status',
-    keywords='pyramid svc status monitoring',
+    keywords='pyramid svc status monitoring prometheus',
     namespace_packages=['lovely'],
     include_package_data=True,
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    zip_safe=False,
-    install_requires=requires
+    zip_safe=True,
+    install_requires=['pyramid>=1.9.1'],
+    license='Apache License 2.0'
 )

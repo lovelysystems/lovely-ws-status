@@ -76,8 +76,8 @@ There's a Pyramid view that can be added to your project which creates an
 endpoint to see the live service status provided by all registered status
 handlers.
 
-The SVC status view can be included into a Pyramid project in the ``server.py``
-file by adding these two lines in your app factory::
+For the view to get registered, you need to configure this module in your application
+by adding these two lines in your app factory::
 
     config.include('lovely.ws.status.svcstatus')
     config.scan('lovely.ws.status.svcstatus')
