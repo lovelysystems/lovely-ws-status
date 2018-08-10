@@ -2,6 +2,15 @@
 Lovely Webservices Status
 =========================
 
+.. image:: https://img.shields.io/pypi/v/lovely-ws-status.svg
+    :target: https://pypi.org/project/lovely-ws-status/
+
+.. image:: https://img.shields.io/pypi/pyversions/lovely-ws-status.svg
+    :target: https://pypi.org/project/lovely-ws-status/
+
+.. image:: https://travis-ci.org/lovelysystems/lovely-ws-status.svg?branch=master
+    :target: https://travis-ci.org/lovelysystems/lovely-ws-status
+
 This package provides service status utilities for Pyramid applications.
 Register your own status handlers and see the service status of all registered
 handlers in the ``svc_status`` Pyramid view.

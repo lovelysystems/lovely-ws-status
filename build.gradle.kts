@@ -19,8 +19,9 @@ val pip = binDir.resolve("pip")
 val python = binDir.resolve("python")
 val readme = project.file("README.rst")
 
-
 tasks {
+
+    val clean = getByName("clean")
 
     val writeVersion by creating {
         val out = file("VERSION.txt")
@@ -47,6 +48,8 @@ tasks {
             }
         }
     }
+    // remove the virtualenv upon clean
+    clean.doLast { delete(envDir) }
 
     val nailRequirements by creating {
         group = "Bootstrap"
@@ -75,7 +78,6 @@ tasks {
         description = "Installs project development dependencies into the venv"
         dependsOn(venv, nailRequirements, writeVersion)
         val req_file = file("requirements-dev.txt")
-        val setup_file = file("setup.py")
         // use pytest executable as a marker
         outputs.file(binDir.resolve("pytest"))
         doLast {
@@ -104,6 +106,8 @@ tasks {
             }
         }
     }
+    // remove the python dist folder upon clean
+    clean.doLast { delete(file("dist")) }
 
     val pytest by creating {
         group = "Verification"
@@ -135,9 +139,10 @@ tasks {
             }
         }
     }
-}
 
-tasks.getByName("test").dependsOn(tasks.getByName("pytest"))
+    getByName("test").dependsOn(pytest)
+    getByName("check").dependsOn(sdist)
+}
 
 java.sourceSets {
     "main" { java.srcDirs("src") }

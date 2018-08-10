@@ -88,8 +88,18 @@ result is responded::
     >>> request = DummyRequest()
     >>> request.headers = {'accept': 'application/json'}
     >>> response = svc_status_view(request)
-    >>> print(response.body.decode('utf-8'))
-    {"status1":{"state":"OK"},"status2":{"state":"OK"},"status3":{"state":"OK"}}
+    >>> print_json(response.body)
+    {
+        "status1": {
+            "state": "OK"
+        },
+        "status2": {
+            "state": "OK"
+        },
+        "status3": {
+            "state": "OK"
+        }
+    }
     >>> response.headers.get('Content-Type')
     'application/json'
 
@@ -100,8 +110,6 @@ The view can alternatively be called with the '.json' extension::
     >>> response = svc_status_view(request)
     >>> response.headers.get('Content-Type')
     'application/json'
-    >>> print(response.body.decode('utf-8'))
-    {"status1":{"state":"OK"},"status2":{"state":"OK"},"status3":{"state":"OK"}}
 
 Additional status info can only be provided in the JSON view::
 
@@ -109,9 +117,19 @@ Additional status info can only be provided in the JSON view::
     ...     return {'state': OK, 'detail': 'some more information'}
     >>> addStatusHandler('status2', informative_status_handler)
     >>> response = svc_status_view(request)
-    >>> print(response.body.decode('utf-8'))
-    {"status1":{"state":"OK"},"status2":{"state":"OK","detail":"some more information"},"status3":{"state":"OK"}}
-
+    >>> print_json(response.body)
+    {
+        "status1": {
+            "state": "OK"
+        },
+        "status2": {
+            "detail": "some more information",
+            "state": "OK"
+        },
+        "status3": {
+            "state": "OK"
+        }
+    }
 
 Prometheus Status
 =================
@@ -136,28 +154,19 @@ The status can be requested in prometheus exposition format::
     >>> response.headers.get('Content-Type')
     'text/plain; version=0.0.4; charset=UTF-8'
     >>> print(response.body.decode('utf-8'))
+    ...
     # HELP svc_status Status 0->OK, 1->YELLOW, 2->RED
     # TYPE svc_status untyped
     svc_status{name="status1"} 0
-    # HELP svc_status Status 0->OK, 1->YELLOW, 2->RED
-    # TYPE svc_status untyped
-    svc_status{name="status2"} 1
-    # HELP svc_status Status 0->OK, 1->YELLOW, 2->RED
-    # TYPE svc_status untyped
-    svc_status{name="status3"} 2
-    svc_status{name="status3_errors"} 7
-    svc_status{name="status3_good"} 42
     ...
 
 Because the test environment has prometheus_client installed additional
 prometheus metrics are provided::
 
     >>> print(response.body.decode('utf-8'))
-    # HELP ...
-    ...
-    # HELP python_info Python platform information
+    # ...HELP python_info Python platform information
     # TYPE python_info gauge
-    python_info{implementation="CPython",...
+    python_info{implementation=...
 
 The last metric must end with a new line::
 
@@ -171,28 +180,13 @@ Prometheus metrics are also added if available::
     >>> c.inc()
     >>> response = svc_status_view(request)
     >>> print(response.body.decode('utf-8'))
-    # HELP ...
-    ...
-    # HELP test A test counter
+    # ...HELP test A test counter
     # TYPE test counter
-    test 1.0
-    <BLANKLINE>
+    test 1.0...
 
     >>> c.inc()
     >>> response = svc_status_view(request)
     >>> print(response.body.decode('utf-8'))
-    # HELP ...
-    ...
-    # HELP test A test counter
+    # ...HELP test A test counter
     # TYPE test counter
-    test 2.0
-    <BLANKLINE>
-
-
-Test Clean Up
-=============
-
-Remove the registered status handler::
-
-    >>> from lovely.ws import status
-    >>> status.STATUS_HANDLERS.clear()
+    test 2.0...

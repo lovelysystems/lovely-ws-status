@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+script:
+- "echo 0.0.0  > VERSION.txt"
+- pip install -r requirements-dev.txt
+- python setup.py sdist
+- pip install --no-deps --no-index -f dist/ lovely-ws-status
+- pytest README.rst
+- pytest tests/

@@ -10,3 +10,4 @@ __pycache__/
 *.iml
 /dist/
 VERSION.txt
+MANIFEST

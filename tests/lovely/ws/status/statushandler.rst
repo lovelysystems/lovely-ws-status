@@ -37,8 +37,11 @@ Register the handler::
 Now the status can be requested::
 
     >>> from lovely.ws.status import getStatus
-    >>> getStatus('test')
-    {'state': 'YELLOW', 'detail': 'I am yellow'}
+    >>> print_dict(getStatus('test'))
+    {
+        "detail": "I am yellow",
+        "state": "YELLOW"
+    }
 
 
 For classes there is the `StateHandlerMixin` class which can be used to
@@ -58,8 +61,11 @@ provide their running state as service status::
 setState allows to set any additional property::
 
     >>> checker.setState(GREEN, detail='running')
-    >>> getStatus('test2')
-    {'state': 'OK', 'detail': 'running'}
+    >>> print_dict(getStatus('test2'))
+    {
+        "detail": "running",
+        "state": "OK"
+    }
 
 It is possible to send state changes to a logger. The logger must be assigned
 to the logger property of the instance::
